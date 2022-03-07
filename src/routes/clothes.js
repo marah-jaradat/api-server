@@ -1,44 +1,44 @@
 "use strict";
 
 const express = require("express");
-const { clothes } = require("../models/index");
+const { clothesCollection } = require("../models/index");
 const router = express.Router();
 
 router.get("/clothes", getClothes);
-router.post("/clothes", addClothes);
-router.get("/clothes/:id", getById);
-router.delete("/clothes/:id", deleteClothes);
-router.put("/clothes/:id", updateClothes);
+router.post("/clothes", addedClothes);
+router.get("/clothes/:id", gettedById);
+router.put("/clothes/:id", updatedClothes);
+router.delete("/clothes/:id", deletedClothes);
 
 async function getClothes(req, res) {
-  let allClothes = await clothes.findAll();
+  let allClothes = await clothesCollection.readRecord();
   res.status(200).json(allClothes);
 }
 
-async function addClothes(req, res) {
+async function addedClothes(req, res) {
   let newClothes = req.body;
-  let newCloth = await clothes.create(newClothes);
+  let newCloth = await clothesCollection.createRecord(newClothes);
   res.status(201).json(newCloth);
 }
 
-async function getById(req, res) {
+async function gettedById(req, res) {
   let gettedId = parseInt(req.params.id);
-  let gettedClothes = await clothes.findOne({ where: { id: gettedId } });
+  let gettedClothes = await clothesCollection.readRecord({
+    where: { id: gettedId },
+  });
   res.status(200).json(gettedClothes);
 }
 
-async function deleteClothes(req, res) {
-  let delId = parseInt(req.params.id);
-  let delCloth = await clothes.destroy({ where: { id: delId } });
-  res.status(204).json(delCloth);
-}
-
-async function updateClothes(req, res) {
+async function updatedClothes(req, res) {
   let body = req.body;
   let clothId = req.params.id;
-  let clothesNeeded = await clothes.findOne({ where: { id: clothId } });
-  const updatedClothes = await clothesNeeded.update(body);
-  res.status(201).json(updatedClothes);
+  let clothesNeeded = await clothesCollection.updateRecord(body, clothId);
+  res.status(201).json(clothesNeeded);
 }
 
+async function deletedClothes(req, res) {
+  let delId = parseInt(req.params.id);
+  let delCloth = await clothesCollection.deleteRecord({ where: { id: delId } });
+  res.status(204).json(delCloth);
+}
 module.exports = router;

@@ -43,6 +43,7 @@ describe("testing my API server", () => {
 beforeAll(async () => {
   await db.sync();
 });
+
 afterAll(async () => {
   await db.drop();
 });

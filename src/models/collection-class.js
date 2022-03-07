@@ -5,12 +5,12 @@ class collection {
   }
 
   async createRecord(obj) {
-    console.log("this model is", this.model);
+    console.log("model is", this.model);
     try {
       return await this.model.create(obj);
-    } catch (e) {
+    } catch (error) {
       console.error(
-        "error in creating a new record for model: ",
+        "not able to create a new record for model: ",
         this.model.name
       );
     }
@@ -23,7 +23,7 @@ class collection {
       } else {
         return await this.model.findAll();
       }
-    } catch (e) {
+    } catch (error) {
       console.error("error in reading record(s) for model: ", this.model.name);
     }
   }
@@ -35,16 +35,16 @@ class collection {
           returning: true,
         });
       }
-    } catch (e) {
+    } catch (error) {
       console.error("error in updating record(s) for model: ", this.model.name);
     }
   }
-  async removeRecord(id) {
+  async deleteRecord(id) {
     try {
       if (id) {
         return await this.model.destroy({ where: { id: id } });
       }
-    } catch (e) {
+    } catch (error) {
       console.error("error in removing record(s) for model: ", this.model.name);
     }
   }
