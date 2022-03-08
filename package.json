@@ -29,6 +29,7 @@
     "postgresql": "^0.0.1",
     "psql": "^0.0.1",
     "sequelize": "^6.17.0",
+    "sql": "^0.78.0",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
