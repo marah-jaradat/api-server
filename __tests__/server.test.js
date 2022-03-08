@@ -3,6 +3,7 @@ const server = require("../src/server");
 const supertest = require("supertest");
 const request = supertest(server.app);
 const { db } = require("../src/models/index");
+const { expect, it } = require("@jest/globals");
 
 let id = 1;
 
@@ -43,10 +44,41 @@ describe("testing my API server", () => {
 beforeAll(async () => {
   await db.sync();
 });
-
 afterAll(async () => {
   await db.drop();
 });
+
+// describe("testing db router", () => {
+//   it("can get list of records", async () => {
+//     const response = await request.get("/person");
+//     expect(response.status).toBe(200);
+//   });
+// });
+// describe("testing 404", () => {
+//   it("testing /person", async () => {
+//     const response = await request.get("/wrongPath");
+//     expect(response.status).toEqual(404);
+//   });
+
+//   it("testing bad method", async () => {
+//     id = 1;
+//     const response = await request.get("/clothes/1");
+//     expect(parseInt(response.body.id)).toEqual(id);
+//   });
+// });
+
+// describe("testing my server", () => {
+//   it("testing/", async () => {
+//     const response = await request.get("/");
+//     // console.log(response);
+//     expect(response.text).toEqual("home route");
+//   });
+
+//   it("testing/person", async () => {
+//     const response = await request.get("/person");
+//     expect(typeof response.body).toEqual("object");
+//   });
+// });
 
 describe("testing food route", () => {
   it("testing get food", async () => {
@@ -114,35 +146,3 @@ describe("testing clothes route", () => {
     expect(response.status).toEqual(204);
   });
 });
-
-// describe("testing db router", () => {
-//   it("can get list of records", async () => {
-//     const response = await request.get("/person");
-//     expect(response.status).toBe(200);
-//   });
-// });
-// describe("testing 404", () => {
-//   it("testing /person", async () => {
-//     const response = await request.get("/wrongPath");
-//     expect(response.status).toEqual(404);
-//   });
-
-//   it("testing bad method", async () => {
-//     id = 1;
-//     const response = await request.get("/clothes/1");
-//     expect(parseInt(response.body.id)).toEqual(id);
-//   });
-// });
-
-// describe("testing my server", () => {
-//   it("testing/", async () => {
-//     const response = await request.get("/");
-//     // console.log(response);
-//     expect(response.text).toEqual("home route");
-//   });
-
-//   it("testing/person", async () => {
-//     const response = await request.get("/person");
-//     expect(typeof response.body).toEqual("object");
-//   });
-// });

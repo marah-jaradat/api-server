@@ -4,10 +4,10 @@ class collection {
     this.model = model;
   }
 
-  async createRecord(obj) {
+  async createRecord(body) {
     console.log("model is", this.model);
     try {
-      return await this.model.create(obj);
+      return await this.model.create(body);
     } catch (error) {
       console.error(
         "not able to create a new record for model: ",
@@ -27,10 +27,10 @@ class collection {
       console.error("error in reading record(s) for model: ", this.model.name);
     }
   }
-  async updateRecord(obj, id) {
+  async updateRecord(body, id) {
     try {
-      if ((obj, id)) {
-        return await this.model.update(obj, {
+      if ((body, id)) {
+        return await this.model.update(body, {
           where: { id: id },
           returning: true,
         });
