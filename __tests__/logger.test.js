@@ -1,7 +1,10 @@
 "use strict";
-const { expect } = require("@jest/globals");
+// const { expect } = require("@jest/globals");
 const logger = require("../src/middleware/logger.js");
-// const { afterEach } = require("jest-circus");
+// const { beforeEach, it } = require("jest-circus");
+// const server = require("../src/server");
+// const supertest = require("supertest");
+// const request = supertest(server.app);
 
 describe("testing next", () => {
   let req = {};
@@ -15,7 +18,7 @@ describe("testing next", () => {
 
 describe("testing logger middleware", () => {
   let consoleSpy;
-  let req = {};
+  let req = { method: "GET", path: "/clothes" };
   let res = {};
   let next = jest.fn();
 
@@ -23,13 +26,16 @@ describe("testing logger middleware", () => {
     consoleSpy = jest.spyOn(console, "log").mockImplementation();
   });
 
-  // afterEach(()=>{
-  //     consoleSpy.mockRestore();
-  // })
+  afterEach(() => {
+    consoleSpy.mockRestore();
+  });
 
   it("test log", () => {
     logger(req, res, next);
     expect(consoleSpy).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith(
+      `Logged @ ${req.method} ${req.path}`
+    );
   });
   it("test next", () => {
     logger(req, res, next);
